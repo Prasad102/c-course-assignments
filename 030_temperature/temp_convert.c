@@ -204,10 +204,6 @@ calculateTemp(int argc, char **argv)
 
 int main(int argc, char *argv[])
 {
-    //
-    // int argc = 5;
-    // char *argv[] = {"./temp_convert", "r", "pp"};
-
     if (argc == 1 || argc == 2)
     {
         puts("temp_convert: error: Not enough arguments.");
