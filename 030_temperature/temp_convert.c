@@ -204,9 +204,9 @@ calculateTemp(int argc, char **argv)
 
 int main(int argc, char *argv[])
 {
-
+    //
     // int argc = 5;
-    // char *argv[] = {"./temp_convert", "c", "k", "30", "40"};
+    // char *argv[] = {"./temp_convert", "r", "pp"};
 
     if (argc == 1 || argc == 2)
     {
@@ -214,14 +214,14 @@ int main(int argc, char *argv[])
         puts("Usage: temp_convert INPUT_SCALE OUTPUT_SCALE [TEMPERATURE]...");
         return EXIT_FAILURE;
     }
+    else if (!(isInputValid(argc, argv)))
+    {
+        return EXIT_FAILURE;
+    }
     else if (argc == 3)
     {
         puts("");
         return EXIT_SUCCESS;
-    }
-    else if (!(isInputValid(argc, argv)))
-    {
-        return EXIT_FAILURE;
     }
     else
     {
