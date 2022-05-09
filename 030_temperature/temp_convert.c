@@ -3,89 +3,94 @@
 #include <stdlib.h>
 #include <string.h>
 
-double convertFahrenheitToCelcius(char inputTemp)
+double convertFahrenheitToCelcius(double inputTemp)
 {
-    double input_temperature = atof(inputTemp);
     double output_temperature = 0.0;
-    output_temperature = (input_temperature - 32) * 5 / 9;
+    output_temperature = (inputTemp - 32) * 5 / 9;
     return output_temperature;
 }
 
-double convertCelciusToFahrenheit(char inputTemp)
+double convertCelciusToFahrenheit(double inputTemp)
 {
-    double input_temperature = atof(inputTemp);
     double output_temperature = 0.0;
-    output_temperature = (input_temperature * 9 / 5) + 32;
+    output_temperature = (inputTemp * 9 / 5) + 32;
     return output_temperature;
 }
 
-double convertKelvinToCelcius(char inputTemp)
+double convertKelvinToCelcius(double inputTemp)
 {
-    double input_temperature = atof(inputTemp);
     double output_temperature = 0.0;
-    output_temperature = input_temperature - 273.15;
+    output_temperature = inputTemp - 273.15;
     return output_temperature;
 }
 
-double convertCelciusToKelvin(char inputTemp)
+double convertCelciusToKelvin(double inputTemp)
 {
-    double input_temperature = atof(inputTemp);
     double output_temperature = 0.0;
-    output_temperature = input_temperature + 273.15;
+    output_temperature = inputTemp + 273.15;
     return output_temperature;
 }
 
-double convertKelvinToFahrenheit(char inputTemp)
+double convertKelvinToFahrenheit(double inputTemp)
 {
-    double input_temperature = atof(inputTemp);
     double output_temperature = 0.0;
-    double celciusTemp = convertKelvinToCelcius(input_temperature);
+    double celciusTemp = convertKelvinToCelcius(inputTemp);
     output_temperature = convertCelciusToFahrenheit(celciusTemp);
     return output_temperature;
 }
 
-double convertFahrenheitToKelvin(char inputTemp)
+double convertFahrenheitToKelvin(double inputTemp)
 {
-    double input_temperature = atof(inputTemp);
     double output_temperature = 0.0;
-    double celciusTemp = convertFahrenheitToCelcius(input_temperature);
+    double celciusTemp = convertFahrenheitToCelcius(inputTemp);
     output_temperature = convertCelciusToKelvin(celciusTemp);
     return output_temperature;
 }
 
-bool isInputValid(int argc, char argv[], char temperatureScalesList[])
+bool isInputValid(int argc, char **argv)
 {
-    size_t tempScaleArraySize = sizeof(temperatureScalesList) / sizeof(temperatureScalesList[0]);
-    bool isScaleInTheList = false;
-    for (int scaleName = 1; scaleName < 3; scaleName++)
-    {
-        for (int i = 0; i < tempScaleArraySize; i++)
-        {
-            int result = strcmp(argv[scaleName], temperatureScalesList[i]);
-            if (result == 0)
-            {
-                isScaleInTheList = true;
-                break;
-            }
-        }
+    char *allowedTemperatureScales[] = {"°C", "c", "C", "celsius", "Celsius", "°F", "f", "F", "fahrenheit", "Fahrenheit", "k", "K", "kelvin", "Kelvin"};
+    size_t tempScaleArraySize = sizeof(allowedTemperatureScales) / sizeof(allowedTemperatureScales[0]);
+    bool isFirstInputCorrect = false;
+    bool isSecondInputCorrect = false;
 
-        if (!isScaleInTheList)
+    for (int i = 0; i < tempScaleArraySize; i++)
+    {
+        int resultFirstInput = strcmp(argv[1], allowedTemperatureScales[i]);
+        int resultSecondInput = strcmp(argv[2], allowedTemperatureScales[i]);
+        if (resultFirstInput == 0)
         {
-            printf("temp_convert: error: Unrecognized temperature scale %s\n", scaleName);
+            isFirstInputCorrect = true;
+        }
+        if (resultSecondInput == 0)
+        {
+            isSecondInputCorrect = true;
+        }
+        if (isFirstInputCorrect && isSecondInputCorrect)
+        {
+            break;
         }
     }
-    return isScaleInTheList;
+    if (!isFirstInputCorrect)
+    {
+        printf("temp_convert: error: Unrecognized temperature scale %s\n", argv[1]);
+    }
+    if (!isSecondInputCorrect)
+    {
+        printf("temp_convert: error: Unrecognized temperature scale %s\n", argv[2]);
+    }
+    return (isFirstInputCorrect && isSecondInputCorrect);
 }
 
-calculateTemp(int argc, char argv[])
+calculateTemp(int argc, char **argv)
 {
-    char celcius = {"°C", "c", "C", "celsius", "Celsius"};
+    char *celcius[] = {"°C", "c", "C", "celsius", "Celsius"};
     size_t celciusArraySize = sizeof(celcius) / sizeof(celcius[0]);
 
-    char kelvin = {"k", "K", "kelvin", "Kelvin"};
+    char *kelvin[] = {"k", "K", "kelvin", "Kelvin"};
     size_t kelvinArraySize = sizeof(kelvin) / sizeof(kelvin[0]);
 
-    char fahrenheit = {"°F", "f", "F", "fahrenheit", "Fahrenheit"};
+    char *fahrenheit[] = {"°F", "f", "F", "fahrenheit", "Fahrenheit"};
     size_t fahrenheitArraySize = sizeof(fahrenheit) / sizeof(fahrenheit[0]);
 
     int input_scale = 0;
@@ -140,7 +145,8 @@ calculateTemp(int argc, char argv[])
         for (int input = 3; input < argc; input++)
         {
             double output_temperature = 0.0;
-            convertCelciusToKelvin(argv[input]);
+            double input_temperature = atof(argv[input]);
+            output_temperature = convertCelciusToKelvin(input_temperature);
             printf("%f\n", output_temperature);
         }
     }
@@ -149,7 +155,8 @@ calculateTemp(int argc, char argv[])
         for (int input = 3; input < argc; input++)
         {
             double output_temperature = 0.0;
-            convertCelciusToFahrenheit(argv[input]);
+            double input_temperature = atof(argv[input]);
+            output_temperature = convertCelciusToFahrenheit(input_temperature);
             printf("%f\n", output_temperature);
         }
     }
@@ -158,7 +165,8 @@ calculateTemp(int argc, char argv[])
         for (int input = 3; input < argc; input++)
         {
             double output_temperature = 0.0;
-            convertKelvinToCelcius(argv[input]);
+            double input_temperature = atof(argv[input]);
+            output_temperature = convertKelvinToCelcius(input_temperature);
             printf("%f\n", output_temperature);
         }
     }
@@ -167,7 +175,8 @@ calculateTemp(int argc, char argv[])
         for (int input = 3; input < argc; input++)
         {
             double output_temperature = 0.0;
-            convertKelvinToFahrenheit(argv[input]);
+            double input_temperature = atof(argv[input]);
+            output_temperature = convertKelvinToFahrenheit(input_temperature);
             printf("%f\n", output_temperature);
         }
     }
@@ -176,7 +185,8 @@ calculateTemp(int argc, char argv[])
         for (int input = 3; input < argc; input++)
         {
             double output_temperature = 0.0;
-            convertFahrenheitToCelcius(argv[input]);
+            double input_temperature = atof(argv[input]);
+            output_temperature = convertFahrenheitToCelcius(input_temperature);
             printf("%f\n", output_temperature);
         }
     }
@@ -185,7 +195,8 @@ calculateTemp(int argc, char argv[])
         for (int input = 3; input < argc; input++)
         {
             double output_temperature = 0.0;
-            convertFahrenheitToKelvin(argv[input]);
+            double input_temperature = atof(argv[input]);
+            output_temperature = convertFahrenheitToKelvin(input_temperature);
             printf("%f\n", output_temperature);
         }
     }
@@ -193,7 +204,9 @@ calculateTemp(int argc, char argv[])
 
 int main(int argc, char *argv[])
 {
-    char allowedTemperatureScales = {"°C", "c", "C", "celsius", "Celsius", "°F", "f", "F", "fahrenheit", "Fahrenheit", "k", "K", "kelvin", "Kelvin"};
+
+    // int argc = 5;
+    // char *argv[] = {"./temp_convert", "c", "k", "30", "40"};
 
     if (argc == 1 || argc == 2)
     {
@@ -206,7 +219,7 @@ int main(int argc, char *argv[])
         puts("");
         return EXIT_SUCCESS;
     }
-    else if (!(isInputValid(argc, argv, allowedTemperatureScales)))
+    else if (!(isInputValid(argc, argv)))
     {
         return EXIT_FAILURE;
     }
