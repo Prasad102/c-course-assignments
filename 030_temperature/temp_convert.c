@@ -1,51 +1,38 @@
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 double convertFahrenheitToCelcius(double inputTemp)
 {
-    double output_temperature = 0.0;
-    output_temperature = (inputTemp - 32) * 5 / 9;
-    return output_temperature;
+    return (inputTemp - 32) * 5 / 9;
 }
 
 double convertCelciusToFahrenheit(double inputTemp)
 {
-    double output_temperature = 0.0;
-    output_temperature = (inputTemp * 9 / 5) + 32;
-    return output_temperature;
+    return (inputTemp * 9 / 5) + 32;
 }
 
 double convertKelvinToCelcius(double inputTemp)
 {
-    double output_temperature = 0.0;
-    output_temperature = inputTemp - 273.15;
-    return output_temperature;
+    return inputTemp - 273.15;
 }
 
 double convertCelciusToKelvin(double inputTemp)
 {
-    double output_temperature = 0.0;
-    output_temperature = inputTemp + 273.15;
-    return output_temperature;
+    return inputTemp + 273.15;
 }
 
 double convertKelvinToFahrenheit(double inputTemp)
 {
-    double output_temperature = 0.0;
     double celciusTemp = convertKelvinToCelcius(inputTemp);
-    output_temperature = convertCelciusToFahrenheit(celciusTemp);
-    return output_temperature;
+    return convertCelciusToFahrenheit(celciusTemp);
 }
 
 double convertFahrenheitToKelvin(double inputTemp)
 {
-    double output_temperature = 0.0;
     double celciusTemp = convertFahrenheitToCelcius(inputTemp);
-    output_temperature = convertCelciusToKelvin(celciusTemp);
-    return output_temperature;
+    return convertCelciusToKelvin(celciusTemp);
 }
 
 bool isInputValid(int index, int argc, char **argv, int *scale)
@@ -93,12 +80,11 @@ bool arebothTemparatureScalesValid(int argc, char **argv, int *inputScale, int *
 calculateTemperature(int argc, char **argv, int input_scale, int output_scale)
 {
     // celcius = 1, kelvin = 2, fahrenheit = 3
-
+    double output_temperature = 0.0;
     if (input_scale == 1 && output_scale == 2)
     {
         for (int input = 3; input < argc; input++)
         {
-            double output_temperature = 0.0;
             double input_temperature = atof(argv[input]);
             output_temperature = convertCelciusToKelvin(input_temperature);
             printf("%f\n", output_temperature);
@@ -108,7 +94,6 @@ calculateTemperature(int argc, char **argv, int input_scale, int output_scale)
     {
         for (int input = 3; input < argc; input++)
         {
-            double output_temperature = 0.0;
             double input_temperature = atof(argv[input]);
             output_temperature = convertCelciusToFahrenheit(input_temperature);
             printf("%f\n", output_temperature);
@@ -118,7 +103,6 @@ calculateTemperature(int argc, char **argv, int input_scale, int output_scale)
     {
         for (int input = 3; input < argc; input++)
         {
-            double output_temperature = 0.0;
             double input_temperature = atof(argv[input]);
             output_temperature = convertKelvinToCelcius(input_temperature);
             printf("%f\n", output_temperature);
@@ -128,7 +112,6 @@ calculateTemperature(int argc, char **argv, int input_scale, int output_scale)
     {
         for (int input = 3; input < argc; input++)
         {
-            double output_temperature = 0.0;
             double input_temperature = atof(argv[input]);
             output_temperature = convertKelvinToFahrenheit(input_temperature);
             printf("%f\n", output_temperature);
@@ -138,7 +121,6 @@ calculateTemperature(int argc, char **argv, int input_scale, int output_scale)
     {
         for (int input = 3; input < argc; input++)
         {
-            double output_temperature = 0.0;
             double input_temperature = atof(argv[input]);
             output_temperature = convertFahrenheitToCelcius(input_temperature);
             printf("%f\n", output_temperature);
@@ -148,7 +130,6 @@ calculateTemperature(int argc, char **argv, int input_scale, int output_scale)
     {
         for (int input = 3; input < argc; input++)
         {
-            double output_temperature = 0.0;
             double input_temperature = atof(argv[input]);
             output_temperature = convertFahrenheitToKelvin(input_temperature);
             printf("%f\n", output_temperature);
