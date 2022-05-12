@@ -65,7 +65,7 @@ bool isInputValid(int index, int argc, char **argv, int *scale)
     return isInputCorrect;
 }
 
-bool arebothTemparatureScalesValid(int argc, char **argv, int *inputScale, int *outputScale)
+bool areBothTemparatureScalesValid(int argc, char **argv, int *inputScale, int *outputScale)
 {
 
     bool isFirstInputValid = false;
@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
         puts("Usage: temp_convert INPUT_SCALE OUTPUT_SCALE [TEMPERATURE]...");
         return EXIT_FAILURE;
     }
-    else if (!(arebothTemparatureScalesValid(argc, argv, &input_scale, &output_scale)))
+    else if (!(areBothTemparatureScalesValid(argc, argv, &input_scale, &output_scale)))
     {
         return EXIT_FAILURE;
     }
