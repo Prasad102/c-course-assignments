@@ -135,6 +135,13 @@ calculateTemperature(int argc, char **argv, int input_scale, int output_scale)
             printf("%f\n", output_temperature);
         }
     }
+    else if (input_scale == output_scale)
+    {
+        for (int input = 3; input < argc; input++)
+        {
+            puts(argv[input]);
+        }
+    }
 }
 
 int main(int argc, char *argv[])
@@ -151,11 +158,6 @@ int main(int argc, char *argv[])
     else if (!(areBothTemparatureScalesValid(argc, argv, &input_scale, &output_scale)))
     {
         return EXIT_FAILURE;
-    }
-    else if (argc == 3)
-    {
-        puts("");
-        return EXIT_SUCCESS;
     }
     else
     {
